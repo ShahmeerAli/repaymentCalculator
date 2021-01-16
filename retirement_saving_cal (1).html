@@ -1,0 +1,436 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap" rel="stylesheet">
+
+    <title>Retirement Saving Calculator</title>
+    <style>
+        /*body {*/
+        /*    font-family: Montserrat !important;*/
+        /*}*/
+        .display-4 {
+            font-size: 1.5rem;
+        }
+        .card {
+            box-shadow: none;
+            border-radius: 2px;
+        }
+        .card-title {
+            color: rgba(0, 100, 200, 0.904);
+        }
+        #card-yearly {
+            position: relative;
+            height: auto;
+        }
+
+        ul.list-group.list-group-striped li:nth-of-type(odd) {
+            background: #f1f1f3;
+        }
+        ul.list-group.list-group-striped li:nth-of-type(even) {
+            background: white;
+        }
+
+        .list-group-item .value {
+            font-weight: bold;
+            display: flex;
+            float: right;
+        }
+
+         input[type="number"]::-webkit-inner-spin-button,
+         input[type="number"]::-webkit-outer-spin-button {
+             -webkit-appearance: none;
+         }
+
+        input {
+            border-radius: 0px;
+            border-color: #a7a6ab;
+        }
+        div {
+            position: relative;
+        }
+        .append-text {
+            position: absolute;
+            color: #a7a6ab;
+            top: 3px;
+        }
+        .left-overlay .append-text {
+            left: 25px;
+        }
+        .left-overlay input {
+            padding-left: 25px;
+        }
+        .right-overlay .append-text {
+            right: 25px;
+        }
+        .right-overlay input {
+            padding-right: 25px;
+        }
+
+    </style>
+
+</head>
+<body>
+
+<div class="container-fluid">
+
+<div class="row justify-content-center">
+    <div class="col-md-6 mx-1">
+        <div class="card">
+            <div class="card-body pb-0">
+                <h5 class="card-title pb-2">Retirement Saving Plan</h5>
+                <hr />
+                <div class="form-group row">
+                    <label for="age" class="col-sm-6">Current Age</label>
+                    <div class="col-sm-6 right-overlay">
+                        <div class="append-text">years</div>
+                        <input
+                                id="age"
+                                type="number" value="35"
+                                class="form-control form-control-sm"/>
+                    </div>
+                </div>
+
+
+                <div class="form-group row">
+                    <label for="retirementAge" class="col-sm-6">Age at Retirement</label>
+                    <div class="col-sm-6 right-overlay">
+                        <div class="append-text">years</div>
+                        <input id="retirementAge"
+                                type="number" value="65"
+                                class="form-control form-control-sm" />
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="presentValue" class="col-sm-6">Present Value</label>
+                    <div class="col-sm-6 right-overlay">
+                        <div class="append-text">$</div>
+                        <input
+                                id="presentValue"
+                                type="number" value="10000"
+                                class="form-control form-control-sm"
+                               />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="annualReturn" class="col-sm-6">
+                        Expected Annual Return
+                    </label>
+                    <div class="col-sm-6 right-overlay">
+                        <div class="append-text">%</div>
+                        <input
+                                id="annualReturn"
+                                type="number" value="6"
+                                class="form-control form-control-sm" />
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="annualPayment" class="col-sm-6">
+                        Annual Payment
+                    </label>
+                    <div class="col-sm-6 right-overlay">
+                        <div class="append-text">$</div>
+                        <input
+                                id="annualPayment"
+                                type="number" value="2000"
+                                class="form-control form-control-sm" />
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="annualPayments" class="col-sm-6">
+                      # of Annual Payments
+                    </label>
+                    <div class="col-sm-6 right-overlay">
+                        <div class="append-text"></div>
+                        <input
+                                id="annualPayments"
+                                type="number" value="15"
+                                class="form-control form-control-sm" />
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="col-md-5 mx-1">
+        <div class="card px-0" style="border: none">
+            <div class="card-body px-0 pb-0">
+                <h5 class="card-title pl-3 pb-0" style="border: 1px">Summary</h5>
+
+                <table class="table table-bordered table-striped" >
+                    <thead>
+                    </thead>
+
+                    <tbody>
+                    <tr>
+                        <th>Years until Retirement:</th>
+                        <td id="YIR">--</td>
+                    </tr>
+                    <tr>
+                        <th>Estimated Future Value:</th>
+                        <td id="EFV">--</td>
+                    </tr>
+                    <tr>
+                        <th>Total Invested:</th>
+                        <td id="TI">--</td>
+                    </tr>
+                    <tr>
+                        <th>Total Interest:</th>
+                        <td id="TIN">--</td>
+                    </tr>
+
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+        <canvas id="payment-chart">
+
+        </canvas>
+    </div>
+</div>
+<hr />
+
+<div class="row justify-content-center py-2">
+
+    <div class="col-md-10 mx-1 card px-0">
+        <div class="card-body text-center px-0 pb-0">
+            <h5 class="card-title">Breakdown Schedule</h5>
+            <table class="table table-striped mb-0" id="table1">
+                <thead>
+                <tr>
+                    <th scope="col">Year</th>
+                    <th scope="col">Age</th>
+                    <th scope="col">Rate</th>
+                    <th scope="col">Payments</th>
+                    <th scope="col">Cumulative Payments</th>
+                    <th scope="col">Interest</th>
+                    <th scope="col">Cumulative Interest</th>
+                    <th scope="col">Balance</th>
+                </tr>
+                </thead>
+                <tbody id="tbod1">
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+</div>
+<script crossorigin="anonymous"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.min.js" ></script>
+
+<script>
+    $(document).ready(function () {
+        getresult();
+
+    });
+
+    $("input").change(function (){
+        getresult();
+    });
+
+    function getresult(){
+    var annualPayments = parseFloat($("#annualPayments").val());
+    var annualPayment = parseFloat($("#annualPayment").val());
+    var age = parseFloat($("#age").val());
+    var retirementAge = parseFloat($("#retirementAge").val());
+    var annualReturn = parseFloat($("#annualReturn").val());
+    var presentValue = parseFloat($("#presentValue").val());
+
+       var balance = 0;
+        balance = presentValue;
+
+    var yearsInRetirement = retirementAge - age;
+
+        var cumInterest = 0;
+        var cumPayments = 0;
+        cumPayments = presentValue;
+        cumInterest = 0;
+           var a = [];
+           var bal = [];
+           var ptm = [];
+    var i = 0;
+        var Parent = document.getElementById("tbod1");
+        while(Parent.hasChildNodes())
+        {
+            Parent.removeChild(Parent.firstChild);
+        }
+
+    for (i;i<yearsInRetirement;i++){
+        var table1 = document.getElementById("table1");
+        var tbod = document.getElementById("tbod1");
+
+        if (annualPayments < 1){
+            annualPayment = 0;
+        }
+
+        var interest = 0;
+        interest = parseFloat((balance*annualReturn)/100) ;
+
+        var row = tbod.insertRow(i);
+
+        a[i] = age;
+        var cell1 = row.insertCell(0);
+        var cell2 = row.insertCell(1);
+        var cell3 = row.insertCell(2);
+        var cell4 = row.insertCell(3);
+        var cell5 = row.insertCell(4);
+        var cell6 = row.insertCell(5);
+        var cell7 = row.insertCell(6);
+        var cell8 = row.insertCell(7);
+
+
+        cumPayments = cumPayments + annualPayment;
+        cell1.innerHTML = i + 1;
+        cell2.innerHTML = age;
+        cell3.innerHTML = annualReturn.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '%';
+        cell4.innerHTML = '$ '+ annualPayment.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        cell5.innerHTML = '$ '+ cumPayments.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+
+
+        cell6.innerHTML = '$ '+ interest.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        cumInterest = cumInterest + interest;
+        cell7.innerHTML = '$'+ cumInterest.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+        cell8.innerHTML = '$'+ (balance+interest+annualPayment).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+        age++;
+        annualPayments--;
+        balance = balance+interest+annualPayment;
+
+         bal[i] = balance;
+         ptm[i] = cumPayments;
+
+        document.getElementById('YIR').innerHTML = yearsInRetirement;
+        document.getElementById('EFV').innerHTML = '$'+balance.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        document.getElementById('TI').innerHTML = '$'+cumPayments.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        document.getElementById('TIN').innerHTML = '$'+cumInterest.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+
+    }
+
+    //chart
+        var ctx = document.getElementById('payment-chart').getContext('2d');
+        var gradientStroke = ctx.createLinearGradient(100, 0, 0, 0);
+        gradientStroke.addColorStop(0, '#FF0000');
+        gradientStroke.addColorStop(1, '#FF0000');
+
+
+        var gradientStroke1 = ctx.createLinearGradient(500, 0, 100, 0);
+        gradientStroke1.addColorStop(0, "#38761D");
+        gradientStroke1.addColorStop(1, "#36761D");
+
+        var gradientFill = ctx.createLinearGradient(500, 0, 100, 0);
+        gradientFill.addColorStop(1, "rgba(255, 0, 0, 0.5)");
+        gradientFill.addColorStop(0, "rgba(255, 0, 0, 0.5)");
+
+        var gradientFill1 = ctx.createLinearGradient(500, 0, 100, 0);
+        gradientFill1.addColorStop(0, "rgba(56, 118, 29,0.1)");
+        gradientFill1.addColorStop(1, "rgba(56, 118, 29,0.1)");
+        var mylChart = new Chart(ctx, {
+            type: 'line',
+
+            data: {
+                labels: a,
+                datasets: [{
+                    label: "Balance",
+                    borderColor:               gradientStroke,
+                    pointRadius: 1,
+                    fill: false,
+                    backgroundColor: gradientFill,
+                    borderWidth: 2,
+                    data: bal
+                },
+                    {
+
+                        label: "Cumulative Payments",
+                        borderColor:               gradientStroke1,
+                        pointRadius: 1,
+                        fill: false,
+                        backgroundColor: gradientFill1,
+                        borderWidth: 2,
+                        data: ptm
+
+
+                    }]
+            },
+
+
+
+
+            options: {
+                legend: {
+                    display: true
+                },
+                animation: {
+                    easing: "easeInOutBack"
+                },
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            fontColor: "rgba(0,0,0,0.5)",
+                            fontStyle: "bold",
+                            beginAtZero: false,
+                            maxTicksLimit: 12,
+                            padding: 20,
+                            callback: function(data) {
+                                return '$'+data.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") ;
+                            }
+
+                        },
+                        gridLines: {
+                            drawTicks: false,
+                            display: false
+                        },
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Money'
+                        }
+
+                    }],
+                    xAxes: [{
+                        gridLines: {
+                            zeroLineColor: "transparent"
+                        },
+                        ticks: {
+                            padding: 20,
+                            fontColor: "rgba(0,0,0,0.5)",
+                            fontStyle: "bold"
+                        },
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Age'
+                        }
+                    }]
+                }
+            }
+
+        });
+
+
+
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap" rel="stylesheet">
+
+    <style>
+        /*body {*/
+        /*    font-family: Montserrat !important;*/
+        /*}*/
+        .display-4 {
+            font-size: 1.5rem;
+        }
+        .card {
+            box-shadow: none;
+            border-radius: 2px;
+        }
+        .card-title {
+            color: rgba(0, 100, 200, 0.904);
+        }
+        #card-yearly {
+            position: relative;
+            height: auto;
+        }
+
+        ul.list-group.list-group-striped li:nth-of-type(odd) {
+            background: #f1f1f3;
+        }
+        ul.list-group.list-group-striped li:nth-of-type(even) {
+            background: white;
+        }
+
+        .list-group-item .value {
+            font-weight: bold;
+            display: flex;
+            float: right;
+        }
+
+         input[type="number"]::-webkit-inner-spin-button,
+         input[type="number"]::-webkit-outer-spin-button {
+             -webkit-appearance: none;
+         }
+
+        input {
+            border-radius: 0px;
+            border-color: #a7a6ab;
+        }
+        div {
+            position: relative;
+        }
+        .append-text {
+            position: absolute;
+            color: #a7a6ab;
+            top: 3px;
+        }
+        .left-overlay .append-text {
+            left: 25px;
+        }
+        .left-overlay input {
+            padding-left: 25px;
+        }
+        .right-overlay .append-text {
+            right: 25px;
+        }
+        .right-overlay input {
+            padding-right: 25px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card px-0" style="border: none">
+                    <div class="card-body px-0 pb-0">
+                        <label for="date" class="pl-1"> Balance Date:
+                            <input type="date" name="" id="date" class="form-control form-control-sm">
+                        </label>
+                        <table class="table table-bordered table-striped" >
+                            <thead>
+                                <th>Creditor</th>
+                                <th>Balance</th>
+                                <th>Rate</th>
+                                <th>Payment</th>
+                            </thead>
+                            <tbody class="tbody">
+                                <tr>
+                                    <td><input id="Creditor1" type="text" class="form-control form-control-sm"/></td>
+                                    <td><input id="blance1" type="number" onchange="calc()" class="form-control form-control-sm"/></td>
+                                    <td><input id="Rate1" type="number" class="form-control form-control-sm"/></td>
+                                    <td><input id="Payment1" type="number" onchange="calc2()" class="form-control form-control-sm"/></td>
+                                </tr>
+                                <tr>
+                                    <td><input id="Creditor2" type="text" class="form-control form-control-sm"/></td>
+                                    <td><input id="blance2" type="number" onchange="calc()" class="form-control form-control-sm"/></td>
+                                    <td><input id="Rate2" type="number" class="form-control form-control-sm"/></td>
+                                    <td><input id="Payment2" type="number" onchange="calc2()" class="form-control form-control-sm"/></td>
+                                </tr>
+                                <tr>
+                                    <td><input id="Creditor3" type="text" class="form-control form-control-sm"/></td>
+                                    <td><input id="blance3" type="number" onchange="calc()" class="form-control form-control-sm"/></td>
+                                    <td><input id="Rate3" type="number" class="form-control form-control-sm"/></td>
+                                    <td><input id="Payment3" type="number" onchange="calc2()" class="form-control form-control-sm"/></td>
+                                </tr>
+                                <tr>
+                                    <td><input id="Creditor4" type="text" class="form-control form-control-sm"/></td>
+                                    <td><input id="blance4" type="number" onchange="calc()" class="form-control form-control-sm"/></td>
+                                    <td><input id="Rate4" type="number" class="form-control form-control-sm"/></td>
+                                    <td><input id="Payment4" type="number" onchange="calc2()" class="form-control form-control-sm"/></td>
+                                </tr>
+                                <tr>
+                                    <td><input id="Creditor5" type="text" class="form-control form-control-sm"/></td>
+                                    <td><input id="blance5" type="number" onchange="calc()" class="form-control form-control-sm"/></td>
+                                    <td><input id="Rate5" type="number" class="form-control form-control-sm"/></td>
+                                    <td><input id="Payment5" type="number" onchange="calc2()" class="form-control form-control-sm"/></td>
+                                </tr>
+                                <tr>
+                                    <td><input id="Creditor6" type="text" class="form-control form-control-sm"/></td>
+                                    <td><input id="blance6" type="number" onchange="calc()" class="form-control form-control-sm"/></td>
+                                    <td><input id="Rate6" type="number" class="form-control form-control-sm"/></td>
+                                    <td><input id="Payment6" type="number" onchange="calc2()" class="form-control form-control-sm"/></td>
+                                </tr>
+                                <tr>
+                                    <td><input id="Creditor7" type="text" class="form-control form-control-sm"/></td>
+                                    <td><input id="blance7" type="number" onchange="calc()" class="form-control form-control-sm"/></td>
+                                    <td><input id="Rate7" type="number" class="form-control form-control-sm"/></td>
+                                    <td><input id="Payment7" type="number" onchange="calc2()" class="form-control form-control-sm"/></td>
+                                </tr>
+                                <tr>
+                                    <td><input id="Creditor8" type="text" class="form-control form-control-sm"/></td>
+                                    <td><input id="blance8" type="number" onchange="calc()" class="form-control form-control-sm"/></td>
+                                    <td><input id="Rate8" type="number" class="form-control form-control-sm"/></td>
+                                    <td><input id="Payment8" type="number" onchange="calc2()" class="form-control form-control-sm"/></td>
+                                </tr>
+                                <tr>
+                                    <td><input id="Creditor9" type="text" class="form-control form-control-sm"/></td>
+                                    <td><input id="blance9" type="number" onchange="calc()" class="form-control form-control-sm"/></td>
+                                    <td><input id="Rate9" type="number" class="form-control form-control-sm"/></td>
+                                    <td><input id="Payment9" type="number" onchange="calc2()" class="form-control form-control-sm"/></td>
+                                </tr>
+                                <tr>
+                                    <td><input id="Creditor10" type="text" class="form-control form-control-sm"/></td>
+                                    <td><input id="blance10" type="number" onchange="calc()" class="form-control form-control-sm"/></td>
+                                    <td><input id="Rate10" type="number" class="form-control form-control-sm"/></td>
+                                    <td><input id="Payment10" type="number" onchange="calc2()" class="form-control form-control-sm"/></td>
+                                </tr>
+                                <tr>
+                                    <td>Total Balance :</td>
+                                    <td><input id="blanceTotal" type="number" value="0" class="form-control form-control-sm" disabled/></td>
+                                    <td>Total Payment :</td>
+                                    <td><input id="paymentTotal" type="number" value="0" class="form-control form-control-sm" disabled/></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div>
+                            <div class="form-group row">
+                                <label for="monthlyPayment" class="col-sm-2 col-form-label">Monthly Payment: </label>
+                                <div class="col-sm-2">
+                                  <input type="number" class="form-control" id="monthlyPayment" onkeyup="payment()" onkeypress="payment()" value="0">
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <label for="InitialSnowball" class="col-sm-2 col-form-label">Initial Snowball: </label>
+                                <div class="col-sm-2">
+                                  <input type="number" class="form-control" id="InitialSnowball" value="0" disabled>
+                                </div>
+                              </div>
+                              <button type="button" class="btn btn-outline-dark" onclick="calculate()"> Click </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col-md-12">
+                 <label for="option">Strategy: 
+                    <select id="option" class="p-2">
+                        <option value="Snowball">Snowball (Lowest Balance First)</option>
+                        <option value="Avalanche">Avalanche (Highest Interest First)</option>
+                    </select>
+                </label>
+                <table class="table">
+                    <thead class="thead-dark">
+                      <tr>
+                        <th scope="col">Creditors in Chosen Order</th>
+                        <th scope="col">Original Balance</th>
+                        <th scope="col">Interest Paid</th>
+                        <th scope="col">Months to Pay Off</th>
+                        <th scope="col">Month Paid Off</th>
+                      </tr>
+                    </thead>
+                    <tbody id="content">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <canvas id="payment-chart">
+
+    </canvas>
+    <script src="app.js"></script>
+<script crossorigin="anonymous"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.min.js" ></script>
+
+</body>
+</html>

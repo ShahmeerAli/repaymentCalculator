@@ -1,6 +1,5 @@
 var data = [];//[ [name,balance,rate,payment] , ... ]
-var sortSmall = []; //[ [name,balance,rate,payment,interest,months] , ... ]
-var sortLarge = []; //[ [name,balance,rate,payment,interest,months] , ... ]
+var result = []; //[ [finalBal,interest,months,initialBalance] , ... ]
 var balanceTotal = document.getElementById("blanceTotal");
 var monthlyPayment = document.getElementById("monthlyPayment");
 var paymentTotal = document.getElementById("paymentTotal");
@@ -30,6 +29,7 @@ const getData = () => {
 
 //getting totals and setting initial snowball
 const calcOne = () =>{
+    getData();
     let balance = 0;
     let payment = 0;
     for(i=0; i<data.length; i++){
@@ -46,12 +46,17 @@ const calcOne = () =>{
     initSnowball.value = parseFloat(monthlyPayment.value)-payment;
 }
 
-var remainingBal = 0;
-//calculating in ascending order
-const lowest = () => {
-    let asc = data.sort((a,b) => a[1] - b[1]);
+//calculating in chosen order
+const strategy = (order) => {
+    let asc = 0; 
     let monPay = monthlyPayment.value;
-    
+    if(order === "Snowball"){
+        asc = data.sort((a,b) => a[1] - b[1]);
+    }else{
+        asc = data.sort((a,b) => b[2] - a[2]);
+    }
+
+
     for(j=0; j<asc.length; j++){
         //for each loan
         let payment = 0;
@@ -61,46 +66,47 @@ const lowest = () => {
             payment += parseFloat(asc[i][3]);
         }
         let snowBall = monPay-payment;
-        console.log(snowBall);
-    
         let bal = parseFloat(loan[1]);
         let rate = parseFloat(loan[2]);
         let pay = parseFloat(loan[3]);
-        let arrSub = calcData(bal,snowBall,rate,j,pay);
-        sortSmall.push(arrSub);
-        console.log(arrSub);
+        let arrSub = calcData(bal,snowBall,rate,j,pay,result);
+        result.push(arrSub);
     }
 }
 
 // calculate all necessary data
-const calcData = (bal,snowBall,rate,index,payment) => {
+const calcData = (bal,snowBall,rate,index,payment,arrData) => {
     let interest = 0;
     let month = 0;
     let arrSub = [];
+    let diff = 0;
+    let initialBalance = bal;
     while( bal >= snowBall ){
         if(index>0){
-            let count = sortSmall[index-1][1];
+            let count = arrData[index-1][1];
             for(i=0;i<count-1;i++){
-                bal = bal - ( payment - ((bal*rate/100)/12) );
                 interest += (bal*rate/100)/12;
+                bal = bal - ( payment - ((bal*rate/100)/12) );
                 month++;
             }
-            let remBal = sortSmall[index-1][2];
-            bal = bal - ( (snowBall - remBal) - ((bal*rate/100)/12) );
+            let remBal = arrData[index-1][2];
+            diff = arrData[index-1][3];
             interest += (bal*rate/100)/12;
+            bal = bal - ( (snowBall - remBal) - ((bal*rate/100)/12) ) + diff;
             month++;
+            index=0;
         }
-        console.log("balance ", bal, " interest ", interest);
         interest += (bal*rate/100)/12;
         bal = bal - ( snowBall - ((bal*rate/100)/12) );
         month++;
-        
     }
     if(bal>0){
         month++;
-        interest += (bal*rate/100)/12;
+        interest +=(bal*rate/100)/12;
     }
-    arrSub.push(interest,month,bal);
+    //Dont know why but need to add this
+    let error = (bal*rate/100)/12;
+    arrSub.push(interest,month,bal,error,initialBalance);
     return(
         arrSub
     );
@@ -109,9 +115,10 @@ const calcData = (bal,snowBall,rate,index,payment) => {
 
 
 const calculate = () => {
-    getData();
-    calcOne();
-    lowest();
+    let order = document.getElementById("option").value;
+    console.log(order)
+    strategy(order);
+    console.log(result);
 }
 
 
